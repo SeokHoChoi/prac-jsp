@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Todo">
+    <resultMap id="TodoResult" type="Todo">
+        <result property="id" column="id"/>
+        <result property="title" column="title"/>
+        <result property="createdAt" column="created_at"/>
+        <result property="updatedAt" column="updated_at"/>
+        <result property="startDate" column="start_date"/>
+        <result property="endDate" column="end_date"/>
+        <result property="completed" column="completed"/>
+    </resultMap>
+    <select id="findAll" resultMap="TodoResult">
+        SELECT * FROM todo ORDER BY created_at DESC
+    </select>
+    <select id="findById" resultMap="TodoResult">
+        SELECT * FROM todo WHERE id=#{id}
+    </select>
+    <insert id="save" parameterType="Todo">
+        INSERT INTO todo(title,start_date,end_date)
+        VALUES(#{title},#{startDate},#{endDate})
+    </insert>
+    <delete id="delete">
+        DELETE FROM todo WHERE id = #{id}
+    </delete>
+
+    <update id="update" parameterType="Todo">
+        UPDATE todo
+        SET title = #{title},
+            start_date = #{startDate},
+            end_date = #{endDate}
+        WHERE id = #{id}
+    </update>
+</mapper>
